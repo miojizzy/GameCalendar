@@ -26,7 +26,7 @@ calendar_field_map = { x.name:x for x in [
 ] }
 
 event_field_map = { x.name:x for x in [
-    Field("UID", value=uuid.uuid4()),
+    Field("UID"),
     Field("SEQUENCE", value="0"),
     Field("SUMMARY"),
     Field("DTSTART", opt="VALUE=DATE"),
@@ -73,6 +73,7 @@ END:VEVENT
 class Event:
     def __init__(self, summary="", dt=""):
         self._field_map = copy.deepcopy(event_field_map)
+        self._field_map["UID"].value = uuid.uuid4()
         self._field_map["SUMMARY"].value = summary
         self._field_map["DTSTART"].value = dt
         self._field_map["DTEND"].value = dt
