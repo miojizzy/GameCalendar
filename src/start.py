@@ -130,10 +130,10 @@ class Calendar:
 
 def main():
     calendar = Calendar("test_calendar")
-    calendar.add_event(Event(summary="act1", dt="20240224"))
-    calendar.add_event(Event(summary="act2", dt="20240225"))
-    calendar.add_event(Event(summary="act3", dt="20240226"))
-    calendar.add_event(Event(summary="act4", dt="20240227"))
+    calendar.add_event(Event(summary="act1", dt="20240214"))
+    calendar.add_event(Event(summary="act2", dt="20240215"))
+    calendar.add_event(Event(summary="act3", dt="20240216"))
+    calendar.add_event(Event(summary="act4", dt="20240217"))
     calendar.save_as_ics("test.ics")
 
 
