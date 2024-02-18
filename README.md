@@ -1,2 +1,2 @@
-# GenShinCalendar
-原神活动日历订阅
+# Calendar
+活动日历订阅
