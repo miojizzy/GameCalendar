@@ -129,12 +129,14 @@ class Calendar:
 
 
 def main():
-    calendar = Calendar("test_calendar")
-    calendar.add_event(Event(summary="act1", dt="20240214"))
-    calendar.add_event(Event(summary="act2", dt="20240215"))
-    calendar.add_event(Event(summary="act3", dt="20240216"))
-    calendar.add_event(Event(summary="act4", dt="20240217"))
-    calendar.save_as_ics("test.ics")
+    with open("conf/conf.yaml", "r") as f:
+        data = taml.load(f,Loader=yaml.FullLoader)
+        for item in data:
+            calendar = Calendar(item["name"])
+            for event in item["events"]: 
+                calendar.add_event(Event(summary=event["name"]+"_start", dt=event["start"]))
+                calendar.add_event(Event(summary=event["name"]+"_end", dt=event["end"]))
+            calendar.save_as_ics(item["name"]+".ics")
 
 
 
