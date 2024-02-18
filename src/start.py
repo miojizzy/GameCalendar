@@ -133,7 +133,7 @@ def main():
     calendar.add_event(Event(summary="act2", dt="20240225"))
     calendar.add_event(Event(summary="act3", dt="20240226"))
     calendar.add_event(Event(summary="act4", dt="20240227"))
-    calendar.save_as_ics("./data/test.ics")
+    calendar.save_as_ics("test.ics")
 
 
 
