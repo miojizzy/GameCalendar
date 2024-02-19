@@ -27,7 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: upload genshin
-        uses: actions/upload-release-asset@v
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
