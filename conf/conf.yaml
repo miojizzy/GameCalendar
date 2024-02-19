@@ -1,5 +1,6 @@
-- name: genshin_v4.4
+- name: genshin
   events: [
+    #v4.4
     { name: 彩鹞栉春风, start: 20240205, end: 20240226 },
     { name: 祈愿·烟火之邀, start: 20240220, end: 20240312 },
     { name: 祈愿·华紫樱绯, start: 20240220, end: 20240312 },

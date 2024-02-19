@@ -1,5 +1,6 @@
 import uuid
 import copy
+import yaml
 
 class Field:
     def __init__(self, name, value="", opt=""):
@@ -130,7 +131,7 @@ class Calendar:
 
 def main():
     with open("conf/conf.yaml", "r") as f:
-        data = taml.load(f,Loader=yaml.FullLoader)
+        data = yaml.load(f,Loader=yaml.FullLoader)
         for item in data:
             calendar = Calendar(item["name"])
             for event in item["events"]: 
