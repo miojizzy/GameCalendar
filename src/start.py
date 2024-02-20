@@ -30,8 +30,8 @@ event_field_map = { x.name:x for x in [
     Field("UID"),
     Field("SEQUENCE", value="0"),
     Field("SUMMARY"),
-    Field("DTSTART", opt="VALUE=DATE"),
-    Field("DTEND", opt="VALUE=DATE"),
+    Field("DTSTART", opt="VALUE=DATE-TIME"),
+    Field("DTEND", opt="VALUE=DATE-TIME"),
 ] }
 
 alarm_field_map = { x.name:x for x in [
