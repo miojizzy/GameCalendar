@@ -72,12 +72,13 @@ SEQUENCE:0
 END:VEVENT
 """
 class Event:
-    def __init__(self, summary="", dt=""):
+    def __init__(self, conf):
         self._field_map = copy.deepcopy(event_field_map)
         self._field_map["UID"].value = uuid.uuid4()
-        self._field_map["SUMMARY"].value = summary
-        self._field_map["DTSTART"].value = dt
-        self._field_map["DTEND"].value = dt
+        self._field_map["SUMMARY"].value = conf["name"]
+        self._field_map["DTSTART"].value = conf["start"]
+        if "end" in conf:
+            self._field_map["DTEND"].value = conf["end"]
         self._alarm = Alarm()
 
     def load(self, lines):
@@ -101,10 +102,10 @@ X-WR-TIMEZONE:Asia/Shanghai
 METHOD:PUBLISH
 """
 class Calendar:
-    def __init__(self,name=""):
+    def __init__(self, conf):
         self._field_map = copy.deepcopy(calendar_field_map)
-        self._field_map["X-WR-CALNAME"].value = name
-        self._events = []
+        self._field_map["X-WR-CALNAME"].value = conf["name"]
+        self._events = [ Event(event) for event in conf["events"] ]
 
     def load(self, lines):
         pass
@@ -119,13 +120,12 @@ class Calendar:
     def load_from_ics(self, filename):
         pass
 
-    def save_as_ics(self, filename):
+    def save_as_ics(self):
+        filename="%s.ics"%(self._field_map["X-WR-CALNAME"].value)
         with open(filename, "w") as f :
             for line in self.dump():
                 f.write(line + '\n')
 
-    def add_event(self, event):
-        self._events.append(event)
 
 
 
@@ -133,11 +133,8 @@ def main():
     with open("conf/conf.yaml", "r") as f:
         data = yaml.load(f,Loader=yaml.FullLoader)
         for item in data:
-            calendar = Calendar(item["name"])
-            for event in item["events"]: 
-                calendar.add_event(Event(summary=event["name"]+"_start", dt=event["start"]))
-                calendar.add_event(Event(summary=event["name"]+"_end", dt=event["end"]))
-            calendar.save_as_ics(item["name"]+".ics")
+            calendar = Calendar(item)
+            calendar.save_as_ics()
 
 
 
