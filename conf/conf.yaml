@@ -1,4 +1,5 @@
 - name: genshin_event
+  type: [timeline]
   events: [
     #v4.5
     { name: 升炼研巧万策金, start: 20240314T100000Z, end: 20240401T035900Z },

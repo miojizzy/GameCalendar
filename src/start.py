@@ -75,10 +75,6 @@ class Event:
     def __init__(self, conf):
         self._field_map = copy.deepcopy(event_field_map)
         self._field_map["UID"].value = uuid.uuid4()
-        self._field_map["SUMMARY"].value = conf["name"]
-        self._field_map["DTSTART"].value = conf["start"]
-        if "end" in conf:
-            self._field_map["DTEND"].value = conf["end"]
         self._alarm = Alarm()
 
     def load(self, lines):
@@ -90,6 +86,26 @@ class Event:
         ret += self._alarm.dump()
         ret += ["END:VEVENT"]
         return ret
+    
+class LineEvent(Event):
+    def __init__(self, conf):
+        super().__init__(conf)
+        self._field_map["SUMMARY"].value = conf["name"]
+        self._field_map["DTSTART"].value = conf["start"]
+        self._field_map["DTEND"].value = conf["end"]
+
+
+class PointEvent(Event):
+    def __init__(self, conf, tt):
+        super().__init__(conf)
+        if tt == "start":
+            self._field_map["SUMMARY"].value = conf["name"] + " 开始"
+            self._field_map["DTSTART"].value = conf["start"]
+            self._field_map["DTEND"].value = conf["start"]
+        else:
+            self._field_map["SUMMARY"].value = conf["name"] + " 结束"
+            self._field_map["DTSTART"].value = conf["end"]
+            self._field_map["DTEND"].value = conf["end"]
 
 
 
@@ -105,8 +121,11 @@ class Calendar:
     def __init__(self, conf):
         self._field_map = copy.deepcopy(calendar_field_map)
         self._field_map["X-WR-CALNAME"].value = conf["name"]
-        self._events = [ Event(event) for event in conf["events"] ]
-
+        #self._events = [ LineEvent(event) for event in conf["events"] ]
+        self._events = []
+        for event in conf["events"]:
+            self._events.append(PointEvent(event, "start"))
+            self._events.append(PointEvent(event, "end"))
     def load(self, lines):
         pass
 
