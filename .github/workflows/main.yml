@@ -9,10 +9,10 @@ jobs:
   build_release:
     name: build_release
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        game: [genshin]
-        cate: [event,wish]
+#    strategy:
+#      matrix:
+#        game: [genshin]
+#        cate: [event,wish]
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -36,6 +36,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{env.strategy.game}}_${{env.strategy.cate}}.ics
-          asset_name: ${{env.strategy.game}}_${{env.strategy.cate}}.ics
+#          asset_path: ${{env.strategy.game}}_${{env.strategy.cate}}.ics
+#          asset_name: ${{env.strategy.game}}_${{env.strategy.cate}}.ics
+          asset_path: genshin_event.ics
+          asset_name: genshin_event.ics
           asset_content_type: application/text
